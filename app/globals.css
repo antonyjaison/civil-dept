@@ -24,7 +24,13 @@ body {
   overflow-x: hidden;
 }
 
+.d_lg_none {
+  display: none;
+}
 @media (max-width: 450px) {
+  .d_lg_none {
+    display: block;
+  }
   .sm_d_none {
     display: none;
   }

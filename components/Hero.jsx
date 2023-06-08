@@ -30,7 +30,7 @@ const Hero = () => {
               <Link href="#">/ Gallery</Link>
             </div>
           ) : (
-            <p onClick={() => setMobileNav(true)}>/ Menu</p>
+            <p className="d_lg_none" onClick={() => setMobileNav(true)}>/ Menu</p>
           )}
         </nav>
         <div className={`container sm_d_none ${hero.line}`} />
