@@ -1,0 +1,22 @@
+.logo {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16.8px;
+  line-height: 25px;
+  span {
+    font-weight: 500;
+    font-size: 26.4px;
+    line-height: 40px;
+  }
+}
+
+@media (max-width: 450px) {
+  .logo {
+    font-size: 13.44px;
+    line-height: 20px;
+    span {
+      font-size: 21.12px;
+      line-height: 32px;
+    }
+  }
+}

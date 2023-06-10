@@ -3,6 +3,8 @@
 import hero from "@styles/hero.module.scss";
 import Link from "next/link";
 import { useState } from "react";
+import Logo from "@components/Logo";
+
 
 const Hero = () => {
   const [mobileNav, setMobileNav] = useState(false);
@@ -10,10 +12,12 @@ const Hero = () => {
     <main className={hero.wrapper}>
       <div className={hero.navbar}>
         <nav className={`container`}>
-          <h1>
-            Department of <br /> <span>Civil Engineering</span>
-          </h1>
 
+          {/* <h1>
+            Department of <br /> <span>Civil Engineering</span>
+          </h1> */}
+          <Logo/>
+        
           <div className={hero.links}>
             <Link href="#">/ Library</Link>
             <Link href="#">/ Achievements</Link>
