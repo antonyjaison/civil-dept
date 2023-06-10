@@ -1,10 +1,11 @@
 import Hero from '@components/Hero';
-import home from '@styles/home.module.scss'
+import About from '@components/About'
 
 export default function Home() {
   return (
-    <main className={home.wraapper}>
+    <main>
       <Hero/>
+      <About/>
     </main>
   );
 }

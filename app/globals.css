@@ -24,6 +24,15 @@ body {
   overflow-x: hidden;
 }
 
+.text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 135%;
+  color: var(--text-dark);
+  margin: 0;
+}
+
 .d_lg_none {
   display: none;
 }
@@ -33,5 +42,9 @@ body {
   }
   .sm_d_none {
     display: none;
+  }
+  .text {
+    font-size: 12px;
+    line-height: 145%;
   }
 }
