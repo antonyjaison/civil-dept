@@ -4,6 +4,7 @@ import { useSpring, animated, config } from "@react-spring/web";
 import deptLib from "@styles/depLibrary.module.scss";
 import Logo from "@components/Logo";
 import DepartmentCard from "@components/DepartmentCard";
+import File from "@components/File";
 
 const DepartmentLibrary = ({ params }) => {
   const [animate, setAnimate] = useState(false);
@@ -37,14 +38,14 @@ const DepartmentLibrary = ({ params }) => {
           <Logo />
 
           <div className={deptLib.departments}>
-            <DepartmentCard/>
-            <DepartmentCard/>
-            <DepartmentCard/>
-            <DepartmentCard/>
-            <DepartmentCard/>
-            <DepartmentCard/>
-            <DepartmentCard/>
-            <DepartmentCard/>
+            <DepartmentCard />
+            <DepartmentCard />
+            <DepartmentCard />
+            <DepartmentCard />
+            <DepartmentCard />
+            <DepartmentCard />
+            <DepartmentCard />
+            <DepartmentCard />
           </div>
 
           <button>
@@ -52,7 +53,6 @@ const DepartmentLibrary = ({ params }) => {
           </button>
         </animated.div>
 
-        
         <div className={deptLib.file_section}>
           <nav>
             <h1>Department Library</h1>
@@ -88,6 +88,33 @@ const DepartmentLibrary = ({ params }) => {
               </animated.div>
             </div>
           </nav>
+
+          <div className={deptLib.details_wrapper}>
+            <div className={deptLib.sem_details}>
+              <h1>S1</h1>
+              <label>Sort by:</label>
+              <select name="" id="">
+                <option value="Name">Name</option>
+                <option value="Name">Name</option>
+                <option value="Name">Name</option>
+              </select>
+            </div>
+
+            <div className={deptLib.cards}>
+              <div className={deptLib.file}>
+                <File />
+              </div>
+              <div className={deptLib.file}>
+                <File />
+              </div>
+              <div className={deptLib.file}>
+                <File />
+              </div>
+              <div className={deptLib.file}>
+                <File />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

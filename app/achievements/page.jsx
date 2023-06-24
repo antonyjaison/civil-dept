@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const Achievements = () => {
   return (
-    <div>Achievements</div>
-  )
-}
+    <div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, nostrum.
+    </div>
+  );
+};
 
-export default Achievements
+export default Achievements;
