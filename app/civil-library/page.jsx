@@ -1,11 +1,10 @@
-import React from 'react'
 
-const Library = () => {
+const Dashboard = () => {
   return (
     <div>
-      fdjnsksnvdsjkvdk
+      
     </div>
   )
 }
 
-export default Library
+export default Dashboard
