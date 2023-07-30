@@ -47,10 +47,7 @@ export async function GET(request) {
           case "application/vnd.google-apps.folder":
             folders.push(file);
             break;
-          case "application/vnd.google-apps.document":
-            documents.push(file);
-            break;
-          default:
+          default:documents.push(file);
             break;
         }
       });

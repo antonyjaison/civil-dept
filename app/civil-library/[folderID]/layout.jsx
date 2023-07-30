@@ -1,18 +1,29 @@
 'use client'
 import styles from "@styles/deplib.module.scss";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSpring,animated } from "@react-spring/web";
+import { useRouter } from "next/navigation";
 
 import Logo from "@components/Logo";
 import DepartmentCard from "@components/DepartmentCard";
 
 const Librarylayout = ({ children }) => {
-  const [isMoving, setIsMoving] = useState(false);
+  const [isMoving, setIsMoving] = useState(true);
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setIsMoving(true)
+    }else{
+      setIsMoving(false)
+    }
+  },[])
 
   const animationProps = useSpring({
     transform: !isMoving ? "translateX(0px)" : "translateX(-100%)",
     config: {
-      duration: 300, // Animation duration in milliseconds
+      duration: 100, // Animation duration in milliseconds
       easing: (t) => t * t, // Easing function for smoother animation (Optional)
     },
   });
@@ -20,6 +31,13 @@ const Librarylayout = ({ children }) => {
   const handleClick = () => {
     setIsMoving((prevIsMoving) => !prevIsMoving);
   };
+
+  const goToDashboard = () => {
+    router.push("/civil-library/root")
+    if (window.innerWidth < 768) {
+      setIsMoving((prevIsMoving) => !prevIsMoving);
+    }
+  }
 
   return (
     <>
@@ -32,7 +50,7 @@ const Librarylayout = ({ children }) => {
           </div>
 
           <div className={styles.sidebar_cards}>
-            <DepartmentCard name='Dashboard'/>
+            <DepartmentCard name='Dashboard' onClick={goToDashboard}/>
             <DepartmentCard name='Favorites'/>
           </div>
 

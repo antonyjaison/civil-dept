@@ -1,0 +1,39 @@
+.container {
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  .heading {
+    h2 {
+        color: var(--primary-color);
+        font-size: 22.4px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .nav_links span {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      letter-spacing: 1px;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media(max-width:768px){
+    .container {
+        .heading {
+          h2 {
+            font-size: 16px;
+          }
+          .nav_links span {
+            font-size: 12px;
+          }
+        }
+      }
+}
