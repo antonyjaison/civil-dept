@@ -1,5 +1,6 @@
 import File from "./File";
 import styles from "@styles/filesection.module.scss";
+import PdfCard from "./PdfCard";
 
 const getFiles = async (folderID) => {
   try {
@@ -12,7 +13,7 @@ const getFiles = async (folderID) => {
       }
     );
     if (res.ok) {
-      return res.json();
+      return res.json()
     }
   } catch (error) {
     console.log(error);
@@ -21,18 +22,29 @@ const getFiles = async (folderID) => {
 
 const FileSection = async ({ folderID }) => {
   const { Documents, Folders } = await getFiles(folderID);
-  console.log(Documents);
+
+  if (Documents.length == 0 && Folders.length == 0) {
+    var isDocs = false;
+  }else isDocs = true;
+
+  function sortArrayOfObjects(arr) {
+    arr.sort((a, b) => a.name.localeCompare(b.name));
+    return arr;
+  }
+  
+  const sortedArray = sortArrayOfObjects(Folders)
 
   return (
     <div className={styles.container}>
-      {Folders &&
-        Folders.map((folder) => (
+      {!isDocs && <h3>No files here</h3>}
+      {sortedArray &&
+        sortedArray.map((folder) => (
           <File key={folder.id} name={folder.name} id={folder.id} />
         ))}
-      {/* {Documents &&
+      {Documents &&
         Documents.map((folder) => (
-          <File key={folder.id} name={folder.name} id={folder.id} />
-        ))} */}
+          <PdfCard key={folder.id} name={folder.name} id={folder.id} />
+        ))}
     </div>
   );
 };

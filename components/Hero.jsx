@@ -4,6 +4,7 @@ import hero from "@styles/hero.module.scss";
 import Link from "next/link";
 import { useState } from "react";
 import Logo from "@components/Logo";
+import Login from "./Login";
 
 
 const Hero = () => {
@@ -19,16 +20,18 @@ const Hero = () => {
           <Logo/>
         
           <div className={hero.links}>
-            <Link href="#">/ Library</Link>
+            <Link href="/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">/ Library</Link>
             <Link href="#">/ Achievements</Link>
             <Link href="#">/ Faculty</Link>
             <Link href="#">/ Gallery</Link>
           </div>
 
+          {/* <Login/> */}
+
           {mobileNav ? (
             <div className={hero.mobile_links}>
               <h1 onClick={() => setMobileNav(false)}>X</h1>
-              <Link href="#">/ Library</Link>
+              <Link href="/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">/ Library</Link>
               <Link href="#">/ Achievements</Link>
               <Link href="#">/ Faculty</Link>
               <Link href="#">/ Gallery</Link>

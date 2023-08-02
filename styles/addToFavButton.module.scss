@@ -1,0 +1,17 @@
+.wrapper{
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    &:hover{
+        background-color: #cbc6e6;
+    }
+}
+
+@media(max-width:600px){
+    .wrapper{
+        img{
+            width: 25px;
+        }
+    }
+}

@@ -1,7 +1,7 @@
-'use client'
+"use client";
 import styles from "@styles/deplib.module.scss";
-import { useState,useEffect } from "react";
-import { useSpring,animated } from "@react-spring/web";
+import { useState, useEffect } from "react";
+import { useSpring, animated } from "@react-spring/web";
 import { useRouter } from "next/navigation";
 
 import Logo from "@components/Logo";
@@ -10,15 +10,15 @@ import DepartmentCard from "@components/DepartmentCard";
 const Librarylayout = ({ children }) => {
   const [isMoving, setIsMoving] = useState(true);
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (window.innerWidth < 768) {
-      setIsMoving(true)
-    }else{
-      setIsMoving(false)
+      setIsMoving(true);
+    } else {
+      setIsMoving(false);
     }
-  },[])
+  }, []);
 
   const animationProps = useSpring({
     transform: !isMoving ? "translateX(0px)" : "translateX(-100%)",
@@ -33,29 +33,29 @@ const Librarylayout = ({ children }) => {
   };
 
   const goToDashboard = () => {
-    router.push("/civil-library/root")
+    router.push(`/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN`);
     if (window.innerWidth < 768) {
       setIsMoving((prevIsMoving) => !prevIsMoving);
     }
-  }
+  };
 
   return (
     <>
       <main className={styles.container}>
         <animated.div style={animationProps} className={styles.sidebar}>
-
           <div className={styles.sidebar_header}>
-            <Logo/>
+            <Logo />
             <img onClick={handleClick} src="/icons/menu.svg" alt="" />
           </div>
 
           <div className={styles.sidebar_cards}>
-            <DepartmentCard name='Dashboard' onClick={goToDashboard}/>
-            <DepartmentCard name='Favorites'/>
+            <DepartmentCard name="Dashboard" onClick={goToDashboard} />
+            <DepartmentCard name="Favorites" />
           </div>
 
-          <button><img src="/icons/home.svg" alt="home" /> <p>Go Home</p></button>
-
+          <button>
+            <img src="/icons/home.svg" alt="home" /> <p>Go Home</p>
+          </button>
         </animated.div>
         <div className={styles.main_wrapper}>
           <div className={styles.header}>
@@ -63,9 +63,7 @@ const Librarylayout = ({ children }) => {
             <img onClick={handleClick} src="/icons/menu.svg" alt="" />
           </div>
 
-          <div className={styles.file_section}>
-            {children}
-          </div>
+          <div className={styles.file_section}>{children}</div>
         </div>
       </main>
     </>

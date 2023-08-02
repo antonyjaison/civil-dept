@@ -1,10 +1,11 @@
 import logo from '@styles/logo.module.scss'
+import Link from 'next/link';
 
 const Logo = () => {
   return (
-    <h1 className={logo.logo}>
+    <Link href='/' className={logo.logo}>
       Department of <br /> <span>Civil Engineering</span>
-    </h1>
+    </Link>
   );
 };
 
