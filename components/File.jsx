@@ -2,7 +2,7 @@ import file from "@styles/file.module.scss";
 import Link from "next/link";
 import AddToFav from "./AddToFav";
 
-const File = ({ name, id }) => {
+const File = ({ name, id,type }) => {
 
 
   return (
@@ -11,7 +11,7 @@ const File = ({ name, id }) => {
         <div className={file.top}>
           <div className={file.icons}>
             <img src="/icons/file.svg" alt="file_icon" />
-            <AddToFav id={id}/>
+            <AddToFav type={type} id={id}/>
           </div>
           <p>{name}</p>
         </div>

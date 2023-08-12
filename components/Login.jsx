@@ -12,14 +12,14 @@ import {
 import db from "@firebase/config";
 import { setUser } from "@util/functions";
 
-const Login = ({ setLogin }) => {
+const Login = ({ setLogin,isLogin,setUserExist }) => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (Email.includes("gec")) {
+    if (Email.includes("gec") && Password === "12345678") {
       try {
         const usersCollectionRef = collection(db, "users");
         const docRef = doc(usersCollectionRef, Email);
@@ -34,11 +34,15 @@ const Login = ({ setLogin }) => {
             setUser(Email);
             setEmail("");
             setPassword("");
+            setLogin(!isLogin)
+            setUserExist(true)
           });
         } else {
           // If the document already exists, you can handle the situation accordingly
           console.log("User with this email already exists.");
           setUser(docSnap.data().email);
+          setLogin(!isLogin);
+          setUserExist(true)
         }
       } catch (error) {
         console.error("Error adding user:", error);

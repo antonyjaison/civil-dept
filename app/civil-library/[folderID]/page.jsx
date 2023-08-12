@@ -2,7 +2,12 @@ import FileSection from "@components/FileSection";
 import styles from "@styles/dashboard.module.scss";
 
 const Dashboard =  async ({ params }) => {
-  const { folderID } = params;
+  let { folderID } = params;
+
+  if (folderID === "favorites") {
+    folderID = "root"
+  }
+
   const links = ["home", "s2", "egineering-graphics"];
   return (
     <section className={styles.container}>
