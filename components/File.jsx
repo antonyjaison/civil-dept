@@ -4,6 +4,10 @@ import AddToFav from "./AddToFav";
 
 const File = ({ name, id,type }) => {
 
+  const isFavorite = () => {
+    
+  }
+
 
   return (
     <Link className={file.link} href={`/civil-library/${id}`}>
