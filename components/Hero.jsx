@@ -15,6 +15,7 @@ const Hero = () => {
     setIsLogin(!isLogin);
   };
 
+
   let userExist = isUserExist();
   console.log(userExist);
 

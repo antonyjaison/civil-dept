@@ -16,38 +16,23 @@ const Login = ({ setLogin }) => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
 
+  const submit = async (e) => {
+    e.preventDefault();
+    const res = await fetch("/api/login", {
+      body: JSON.stringify({
+        email: Email,
+        password: Password
+      }),
+      method: "POST"
+    });
+
+    const data = await res.json();
+    console.log(data);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (Email.includes("gec")) {
-      try {
-        const usersCollectionRef = collection(db, "users");
-        const docRef = doc(usersCollectionRef, Email);
-        const docSnap = await getDoc(docRef);
-
-        if (!docSnap.exists()) {
-          // If the document does not exist, set the data for the new document
-          await setDoc(docRef, {
-            email: Email,
-            timestamp: Timestamp.now(),
-          }).then(() => {
-            setUser(Email);
-            setEmail("");
-            setPassword("");
-          });
-        } else {
-          // If the document already exists, you can handle the situation accordingly
-          console.log("User with this email already exists.");
-          setUser(docSnap.data().email);
-        }
-      } catch (error) {
-        console.error("Error adding user:", error);
-      }
-    } else {
-      console.log("You are not the Civil student");
-      setEmail("");
-      setPassword("");
-    }
   };
   return (
     <div className={styles.login_wrapper}>
@@ -57,14 +42,14 @@ const Login = ({ setLogin }) => {
           <img onClick={setLogin} src="/icons/menu.svg" alt="close" />
         </div>
 
-        <form>
+        <form onSubmit={submit}>
           <div className={styles.input_section}>
             <label>Email</label>
             <br />
             <input
               onChange={(e) => setEmail(e.target.value)}
-              type="text"
-              placeholder="exaple@gmail.com"
+              type="email"
+              placeholder="example@gmail.com"
               required
               value={Email}
             />
@@ -80,7 +65,7 @@ const Login = ({ setLogin }) => {
               value={Password}
             />
           </div>
-          <button onClick={handleSubmit}>Login</button>
+          <button>Login</button>
         </form>
       </div>
     </div>

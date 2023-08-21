@@ -3,7 +3,7 @@ import styles from "@styles/dashboard.module.scss";
 
 const Dashboard =  async ({ params }) => {
   const { folderID } = params;
-  const links = ["home", "s2", "egineering-graphics"];
+  const links = ["home", "s2", "engineering-graphics"];
   return (
     <section className={styles.container}>
       <div className={styles.heading}>
