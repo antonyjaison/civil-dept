@@ -39,11 +39,11 @@ const FileSection = async ({ folderID }) => {
       {!isDocs && <h3>No files here</h3>}
       {sortedArray &&
         sortedArray.map((folder) => (
-          <File key={folder.id} name={folder.name} id={folder.id} />
+          <File type="folder" key={folder.id} name={folder.name} id={folder.id} />
         ))}
       {Documents &&
         Documents.map((folder) => (
-          <PdfCard key={folder.id} name={folder.name} id={folder.id} />
+          <PdfCard type="pdf" key={folder.id} name={folder.name} id={folder.id} />
         ))}
     </div>
   );

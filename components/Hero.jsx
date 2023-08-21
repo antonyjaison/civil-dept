@@ -8,24 +8,26 @@ import Login from "./Login";
 import { isUserExist } from "@util/functions";
 
 const Hero = () => {
+
   const [mobileNav, setMobileNav] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [userExist, setUserExist] = useState(isUserExist());
 
   const setLogin = () => {
     setIsLogin(!isLogin);
   };
 
 
-  let userExist = isUserExist();
-  console.log(userExist);
+  const setLogOut = () => {
+    localStorage.removeItem("email");
+    setUserExist(false)
+  }
 
   return (
     <main className={hero.wrapper}>
       <div className={hero.navbar}>
         <nav className={`container`}>
-          {/* <h1>
-            Department of <br /> <span>Civil Engineering</span>
-          </h1> */}
+
           <Logo />
 
           <div className={hero.links}>
@@ -37,9 +39,15 @@ const Hero = () => {
             <Link href="#">/ Achievements</Link>
             <Link href="#">/ Faculty</Link>
             <Link href="#">/ Gallery</Link>
-            <Link href="#" onClick={setLogin}>
-              / Login
-            </Link>
+            {userExist ? (
+                <Link href="#" onClick={setLogOut}>
+                  / Logout
+                </Link>
+              ) : (
+                <Link href="#" onClick={setLogin}>
+                  / Login
+                </Link>
+              )}
           </div>
 
           {/* <Login/> */}
@@ -53,9 +61,15 @@ const Hero = () => {
               <Link href="#">/ Achievements</Link>
               <Link href="#">/ Faculty</Link>
               <Link href="#">/ Gallery</Link>
-              <Link href="#" onClick={setLogin}>
-                / Login
-              </Link>
+              {!!userExist ? (
+                <Link href="#" onClick={setLogOut}>
+                  / Logout
+                </Link>
+              ) : (
+                <Link href="#" onClick={setLogin}>
+                  / Login
+                </Link>
+              )}
             </div>
           ) : (
             <p className="d_lg_none" onClick={() => setMobileNav(true)}>
@@ -71,7 +85,7 @@ const Hero = () => {
         Civil Engineering
       </h1>
 
-      {isLogin && <Login setLogin={setLogin} />}
+      {isLogin && <Login setUserExist={setUserExist} isLogin={isLogin} setLogin={setLogin} />}
     </main>
   );
 };

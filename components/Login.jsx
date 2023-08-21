@@ -12,7 +12,7 @@ import {
 import db from "@firebase/config";
 import { setUser } from "@util/functions";
 
-const Login = ({ setLogin }) => {
+const Login = ({ setLogin, isLogin, setUserExist }) => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
 
@@ -21,19 +21,15 @@ const Login = ({ setLogin }) => {
     const res = await fetch("/api/login", {
       body: JSON.stringify({
         email: Email,
-        password: Password
+        password: Password,
       }),
-      method: "POST"
+      method: "POST",
     });
 
     const data = await res.json();
     console.log(data);
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
   };
+
   return (
     <div className={styles.login_wrapper}>
       <div className={styles.form_section}>

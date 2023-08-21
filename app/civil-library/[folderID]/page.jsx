@@ -1,21 +1,25 @@
 import FileSection from "@components/FileSection";
 import styles from "@styles/dashboard.module.scss";
 
-const Dashboard =  async ({ params }) => {
-  const { folderID } = params;
+const Dashboard = async ({ params }) => {
+  let { folderID } = params;
+
+  if (folderID === "favorites") {
+    folderID = "root";
+  }
+
   const links = ["home", "s2", "engineering-graphics"];
   return (
     <section className={styles.container}>
       <div className={styles.heading}>
-
-      <h2>Dashboard</h2>
-      <div className={styles.nav_links}>
-        {links.map((link) => (
-          <span>{link}/</span>
-        ))}
+        <h2>Dashboard</h2>
+        <div className={styles.nav_links}>
+          {links.map((link) => (
+            <span>{link}/</span>
+          ))}
+        </div>
       </div>
-      </div>
-      <FileSection folderID={folderID}/>
+      <FileSection folderID={folderID} />
     </section>
   );
 };

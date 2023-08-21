@@ -1,3 +1,4 @@
+
 const setUser = (email) => {
   if (typeof localStorage !== "undefined") {
     localStorage.setItem("email", JSON.stringify(email));
@@ -6,12 +7,14 @@ const setUser = (email) => {
 
 const isUserExist = () => {
   if (typeof localStorage !== "undefined") {
-    return !!localStorage.getItem("email")
-      ? JSON.parse(localStorage.getItem("email"))
-      : false;
+    return localStorage.getItem("email")? true : false;
   }
 
   return false;
 };
 
-export {setUser , isUserExist}
+const getUser = () => {
+    return JSON.parse(localStorage.getItem('email'))
+}
+
+export {setUser , isUserExist,getUser}
