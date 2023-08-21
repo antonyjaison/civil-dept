@@ -31,7 +31,7 @@ const AddToFav = ({ id, type }) => {
           type: type,
           email: email,
           timestamp: Timestamp.now(),
-        }).then(async () => {
+        }).then(() => {
           console.log("Added");
           setInFavorites(true);
         });

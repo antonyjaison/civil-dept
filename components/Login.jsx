@@ -1,5 +1,8 @@
+"use client";
+
 import styles from "@styles/login.module.scss";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   addDoc,
@@ -12,47 +15,39 @@ import {
 import db from "@firebase/config";
 import { setUser } from "@util/functions";
 
-const Login = ({ setLogin,isLogin,setUserExist }) => {
+const Login = ({ setLogin, isLogin, setUserExist }) => {
+  const router = useRouter();
+
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await fetch("/api/login", {
+        body: JSON.stringify({
+          email: Email,
+          password: Password,
+        }),
+        method: "POST",
+      });
 
-    if (Email.includes("gec") && Password === "12345678") {
-      try {
-        const usersCollectionRef = collection(db, "users");
-        const docRef = doc(usersCollectionRef, Email);
-        const docSnap = await getDoc(docRef);
-
-        if (!docSnap.exists()) {
-          // If the document does not exist, set the data for the new document
-          await setDoc(docRef, {
-            email: Email,
-            timestamp: Timestamp.now(),
-          }).then(() => {
-            setUser(Email);
-            setEmail("");
-            setPassword("");
-            setLogin(!isLogin)
-            setUserExist(true)
-          });
-        } else {
-          // If the document already exists, you can handle the situation accordingly
-          console.log("User with this email already exists.");
-          setUser(docSnap.data().email);
-          setLogin(!isLogin);
-          setUserExist(true)
-        }
-      } catch (error) {
-        console.error("Error adding user:", error);
+      if (!res.ok) {
+        throw new Error(res.message);
       }
-    } else {
-      console.log("You are not the Civil student");
-      setEmail("");
-      setPassword("");
+
+      const data = await res.json();
+      setError("");
+      if (data.success) {
+        localStorage.setItem("email", JSON.stringify(data.email));
+        router.push(`/civil-library/${process.env.NEXT_PUBLIC_INITIAL_FOLDER}`);
+      }
+    } catch (error) {
+      setError(error.message);
     }
   };
+
   return (
     <div className={styles.login_wrapper}>
       <div className={styles.form_section}>
@@ -61,14 +56,14 @@ const Login = ({ setLogin,isLogin,setUserExist }) => {
           <img onClick={setLogin} src="/icons/menu.svg" alt="close" />
         </div>
 
-        <form>
+        <form onSubmit={submit}>
           <div className={styles.input_section}>
             <label>Email</label>
             <br />
             <input
               onChange={(e) => setEmail(e.target.value)}
-              type="text"
-              placeholder="exaple@gmail.com"
+              type="email"
+              placeholder="example@gmail.com"
               required
               value={Email}
             />
@@ -84,7 +79,7 @@ const Login = ({ setLogin,isLogin,setUserExist }) => {
               value={Password}
             />
           </div>
-          <button onClick={handleSubmit}>Login</button>
+          <button>Login</button>
         </form>
       </div>
     </div>

@@ -1,25 +1,28 @@
-"use client";
-
 import Image from "next/image";
 import about from "@styles/about.module.scss";
+import { headers } from "next/headers";
 
 const About = () => {
-
-  
-  if (window.innerWidth < 450) {
-    var image = "/images/illus_1_mobile.svg";
-  } else image = "/images/illus_1.svg";
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+  let isMobileView = userAgent.match(
+    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+  );
 
   return (
     <section className={about.main}>
       <div className={`container ${about.wrapper}`}>
         <div className={about.one}>
           <Image
-            layout="responsive"
             loading="lazy"
-            src={image}
+            src={
+              isMobileView
+                ? "/images/illus_1_mobile.svg"
+                : "/images/illus_1.svg"
+            }
             width={375}
             height={700}
+            alt="image"
           />
         </div>
         <div className={about.two}>
