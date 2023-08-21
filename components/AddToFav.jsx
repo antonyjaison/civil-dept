@@ -4,7 +4,6 @@ import { getUser } from "@util/functions";
 import { useState, useEffect } from "react";
 
 import {
-  addDoc,
   collection,
   Timestamp,
   doc,
@@ -17,7 +16,10 @@ import db from "@firebase/config";
 const AddToFav = ({ id, type }) => {
   const addToFavorite = async (e) => {
     e.preventDefault();
-    if (!getUser()) return;
+    if (!getUser()){
+      alert("Please login to continue...");
+      return;
+    }
     const email = getUser();
 
     try {
