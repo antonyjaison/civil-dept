@@ -14,7 +14,11 @@ const isUserExist = () => {
 };
 
 const getUser = () => {
-    return JSON.parse(localStorage.getItem('email'))
+  // if (typeof localStorage !== "undefined") {
+  return JSON.parse(localStorage.getItem("email"));
+  // }
+
+  return null;
 }
 
 export {setUser , isUserExist,getUser}

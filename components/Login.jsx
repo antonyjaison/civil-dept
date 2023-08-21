@@ -1,5 +1,8 @@
+"use client";
+
 import styles from "@styles/login.module.scss";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   addDoc,
@@ -13,21 +16,36 @@ import db from "@firebase/config";
 import { setUser } from "@util/functions";
 
 const Login = ({ setLogin, isLogin, setUserExist }) => {
+  const router = useRouter();
+
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/login", {
-      body: JSON.stringify({
-        email: Email,
-        password: Password,
-      }),
-      method: "POST",
-    });
+    try {
+      const res = await fetch("/api/login", {
+        body: JSON.stringify({
+          email: Email,
+          password: Password,
+        }),
+        method: "POST",
+      });
 
-    const data = await res.json();
-    console.log(data);
+      if (!res.ok) {
+        throw new Error(res.message);
+      }
+
+      const data = await res.json();
+      setError("");
+      if (data.success) {
+        localStorage.setItem("email", JSON.stringify(data.email));
+        router.push(`/civil-library/${process.env.NEXT_PUBLIC_INITIAL_FOLDER}`);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
