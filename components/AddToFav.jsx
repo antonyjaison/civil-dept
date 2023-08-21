@@ -33,7 +33,7 @@ const AddToFav = ({ id, type }) => {
           timestamp: Timestamp.now(),
         }).then(async () => {
           console.log("Added");
-          await checkInFavorites(id);
+          setInFavorites(true);
         });
       } else {
         console.log("Exists");
@@ -43,14 +43,15 @@ const AddToFav = ({ id, type }) => {
     }
   };
 
-  const removeFromFavorites = async () => {
+  const removeFromFavorites = async (e) => {
+    e.preventDefault();
     if (!getUser()) return;
     const email = getUser();
 
     try {
       const favDocRef = doc(db, "favorites", id + email);
       await deleteDoc(favDocRef);
-      await checkInFavorites(id);
+      setInFavorites(false);
     } catch (error) {
       console.log(error);
     }
@@ -87,19 +88,18 @@ const AddToFav = ({ id, type }) => {
     fetchData();
   }, [id]);
 
-  if (inFavorites) {
-    return (
-      <button className={styles.wrapper} onClick={removeFromFavorites}>
+  return (
+    <button
+      className={`${styles.wrapper} ${inFavorites ? styles.active : ""}`}
+      onClick={inFavorites ? removeFromFavorites : addToFavorite}
+    >
+      {inFavorites ? (
         <img src="/icons/red-heart.svg" alt="heart" />
-      </button>
-    );
-  } else {
-    return (
-      <button className={styles.wrapper} onClick={addToFavorite}>
+      ) : (
         <img src="/icons/heart_outline.svg" alt="heart" />
-      </button>
-    );
-  }
+      )}
+    </button>
+  );
 };
 
 export default AddToFav;

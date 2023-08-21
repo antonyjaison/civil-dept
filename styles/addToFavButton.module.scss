@@ -1,17 +1,25 @@
-.wrapper{
-    background-color: transparent;
-    border: none;
-    padding: 8px;
-    border-radius: 50%;
-    &:hover{
-        background-color: #cbc6e6;
-    }
-}
+.wrapper {
+  background-color: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
 
-@media(max-width:600px){
-    .wrapper{
-        img{
-            width: 25px;
-        }
+  transform: scale(0.8); /* Initially scaled down */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  &:hover {
+    background-color: #cbc6e6;
+  }
+}
+.wrapper.active {
+  transform: scale(1); /* Restore normal size when active */
+}
+@media (max-width: 600px) {
+  .wrapper {
+    &:hover {
+      background-color: none;
     }
+    img {
+      width: 25px;
+    }
+  }
 }
