@@ -17,6 +17,7 @@ const Hero = () => {
     setIsLogin(!isLogin);
   };
 
+
   const setLogOut = () => {
     localStorage.removeItem("email");
     setUserExist(false)

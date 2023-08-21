@@ -34,7 +34,7 @@ const Librarylayout = ({ children }) => {
 
   const goToDashboard = () => {
     router.push(`/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN`);
-    if (window.innerWidth < 768) {
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
       setIsMoving((prevIsMoving) => !prevIsMoving);
     }
   };
