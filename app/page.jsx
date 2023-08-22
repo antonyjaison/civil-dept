@@ -7,7 +7,7 @@ import Footer from '@components/Footer';
 export default function Home() {
   return (
     <main>
-      <Hero/>
+      <Hero name="Explore Civil Engineering" image="/images/hero.png"/>
       {/* <About/> */}
       <Programs/>
       <Oppertunities/>

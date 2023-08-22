@@ -7,8 +7,7 @@ import Logo from "@components/Logo";
 import Login from "./Login";
 import { isUserExist } from "@util/functions";
 
-const Hero = () => {
-
+const Hero = ({ name, image }) => {
   const [mobileNav, setMobileNav] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [userExist, setUserExist] = useState(isUserExist());
@@ -17,17 +16,46 @@ const Hero = () => {
     setIsLogin(!isLogin);
   };
 
-
   const setLogOut = () => {
     localStorage.removeItem("email");
-    setUserExist(false)
-  }
+    setUserExist(false);
+  };
+
+  const background = {
+    background: `
+      linear-gradient(
+        180deg,
+        #000000 0%,
+        rgba(0, 0, 0, 0) 33.33%,
+        rgba(0, 0, 0, 0) 66.67%,
+        #000000 100%
+      ),
+      url(${image})
+    `,
+  };
+
+  const checkLength = (name) => {
+    return name.split(" ").length > 1;
+  };
+
+  const splitName = (name) => {
+    let splitedName = name.split(" ");
+    let firstText = splitedName[0];
+    
+    let otherString = '';
+  
+    for (let i = 1; i < splitedName.length; i++) {
+      otherString = otherString + ' ' + splitedName[i];
+    }
+  
+    return `${firstText}<br/>${otherString}`;
+  };
+  
 
   return (
-    <main className={hero.wrapper}>
+    <main style={background} className={hero.wrapper}>
       <div className={hero.navbar}>
         <nav className={`container`}>
-
           <Logo />
 
           <div className={hero.links}>
@@ -40,14 +68,14 @@ const Hero = () => {
             <Link href="#">/ Faculty</Link>
             <Link href="#">/ Gallery</Link>
             {userExist ? (
-                <Link href="#" onClick={setLogOut}>
-                  / Logout
-                </Link>
-              ) : (
-                <Link href="#" onClick={setLogin}>
-                  / Login
-                </Link>
-              )}
+              <Link href="#" onClick={setLogOut}>
+                / Logout
+              </Link>
+            ) : (
+              <Link href="#" onClick={setLogin}>
+                / Login
+              </Link>
+            )}
           </div>
 
           {/* <Login/> */}
@@ -55,9 +83,11 @@ const Hero = () => {
           {mobileNav ? (
             <div className={hero.mobile_links}>
               <h1 onClick={() => setMobileNav(false)}>X</h1>
-              <Link href="/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">
-                / Library
-              </Link>
+              {userExist && (
+                <Link href="/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">
+                  / Library
+                </Link>
+              )}
               <Link href="#">/ Achievements</Link>
               <Link href="#">/ Faculty</Link>
               <Link href="#">/ Gallery</Link>
@@ -81,11 +111,18 @@ const Hero = () => {
       </div>
 
       <h1 className={`container`}>
-        Explore <br />
-        Civil Engineering
+        {/* Explore <br />
+        Civil Engineering */}
+        {checkLength(name) ? splitName(name) : name}
       </h1>
 
-      {isLogin && <Login setUserExist={setUserExist} isLogin={isLogin} setLogin={setLogin} />}
+      {isLogin && (
+        <Login
+          setUserExist={setUserExist}
+          isLogin={isLogin}
+          setLogin={setLogin}
+        />
+      )}
     </main>
   );
 };
