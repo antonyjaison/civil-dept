@@ -110,10 +110,14 @@ const Hero = ({ name, image }) => {
         <div className={`container sm_d_none ${hero.line}`} />
       </div>
 
-      <h1 className={`container`}>
+      <h1
+        dangerouslySetInnerHTML={{
+          __html: checkLength(name) ? splitName(name) : name,
+        }}
+        className={`container`}
+      >
         {/* Explore <br />
         Civil Engineering */}
-        {checkLength(name) ? splitName(name) : name}
       </h1>
 
       {isLogin && (
