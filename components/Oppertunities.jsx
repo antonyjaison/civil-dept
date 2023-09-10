@@ -5,7 +5,7 @@ const Oppertunities = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.img_section}>
-        <img src='/images/illus_2.svg'/>
+        <img src='/images/illus_2.svg' alt="img"/>
       </div>
       <div className={styles.content}>
         <h1>Opportunities</h1>

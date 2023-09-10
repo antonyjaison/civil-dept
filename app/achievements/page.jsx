@@ -6,7 +6,7 @@ import React from "react";
 const Achievements = () => {
   return (
     <div>
-      <Hero name="Achievements" image="/images/achive_hero.png" />
+      {/* <Hero name="Achievements" image="/images/achive_hero.png" /> */}
       <AchievementsSection />
       <Footer />
     </div>

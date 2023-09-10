@@ -45,7 +45,7 @@ const Librarylayout = ({ children }) => {
         <animated.div style={animationProps} className={styles.sidebar}>
           <div className={styles.sidebar_header}>
             <Logo />
-            <img onClick={handleClick} src="/icons/menu.svg" alt="" />
+            <img onClick={handleClick} src="/icons/menu.svg" alt="menu" />
           </div>
 
           <div className={styles.sidebar_cards}>
@@ -60,7 +60,7 @@ const Librarylayout = ({ children }) => {
         <div className={styles.main_wrapper}>
           <div className={styles.header}>
             <h2>Department Library</h2>
-            <img onClick={handleClick} src="/icons/menu.svg" alt="" />
+            <img onClick={handleClick} src="/icons/menu.svg" alt="menu" />
           </div>
 
           <div className={styles.file_section}>{children}</div>

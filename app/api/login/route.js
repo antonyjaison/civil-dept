@@ -9,12 +9,16 @@ const schema = zfd.formData({
   password: zfd.text(z.string().min(3).max(30)),
 });
 
+
 export async function POST(request) {
   const { email, password } = await request.json();
+  console.log(email,password)
   const data = schema.safeParse({
     email,
     password,
   });
+
+  console.log(data.data)
 
   if (data.error) {
     return NextResponse.json(data.error, {
@@ -22,14 +26,20 @@ export async function POST(request) {
     });
   }
 
+
   if (
     data.data.email.includes("gecskp.ac.in") &&
     data.data.password === process.env.LOGIN_PASSWORD
   ) {
+    const usersCollectionRef = collection(db, "users");
+    const docRef = doc(usersCollectionRef, data.data.email);
+
     try {
-      const usersCollectionRef = collection(db, "users");
-      const docRef = doc(usersCollectionRef, data.data.email);
+      console.log("Before getDoc");
       const docSnap = await getDoc(docRef);
+      console.log("After getDoc");
+
+      console.log("Exists",docSnap.exists())
 
       if (!docSnap.exists()) {
         // If the document does not exist, set the data for the new document
@@ -49,7 +59,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Internal Server Error",
+          message: error,
         },
         {
           status: 500,

@@ -17,8 +17,10 @@ const Hero = ({ name, image }) => {
   };
 
   const setLogOut = () => {
-    localStorage.removeItem("email");
-    setUserExist(false);
+    // if (!(typeof window !== 'undefined')) {
+    //   localStorage.removeItem("email");
+    //   setUserExist(false);
+    // }
   };
 
   const background = {
@@ -64,9 +66,9 @@ const Hero = ({ name, image }) => {
                 / Library
               </Link>
             )}
-            <Link href="#">/ Achievements</Link>
-            <Link href="#">/ Faculty</Link>
-            <Link href="#">/ Gallery</Link>
+            <Link href="/achievements">/ Achievements</Link>
+            <Link href="/faculty">/ Faculty</Link>
+            <Link href="/facilities">/ Facilities</Link>
             {userExist ? (
               <Link href="#" onClick={setLogOut}>
                 / Logout
@@ -88,9 +90,9 @@ const Hero = ({ name, image }) => {
                   / Library
                 </Link>
               )}
-              <Link href="#">/ Achievements</Link>
-              <Link href="#">/ Faculty</Link>
-              <Link href="#">/ Gallery</Link>
+              <Link href="/achievements">/ Achievements</Link>
+              <Link href="/faculty">/ Faculty</Link>
+              <Link href="/facilities">/ Facilities</Link>
               {!!userExist ? (
                 <Link href="#" onClick={setLogOut}>
                   / Logout
