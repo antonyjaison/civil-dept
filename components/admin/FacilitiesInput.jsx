@@ -1,8 +1,9 @@
+"use client";
+
 import SelectImage from "./SelectImage";
 import InputGroup from "./InputGroup";
 import styles from "@styles/adminPage.module.scss";
 import { useState, useRef } from "react";
-
 import {
   Timestamp,
   collection,
@@ -11,18 +12,23 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import db from "@firebase/config";
-import { storage } from "@firebase/config";
 import uploadImageToFirebase from "@util/uploadImage";
+import ClipLoader from "react-spinners/ClipLoader";
+
+import { useDispatch } from "react-redux";
+import { addFacilities } from "@app/redux/features/facilities/facilitiesSlice";
+import ProgressBar from "./ProgressBar";
 
 const FacilitiesInput = () => {
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState(null);
   const [img, setImg] = useState(null);
   const [facilityName, setFacilityName] = useState("");
   const [description, setDescription] = useState("");
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const facilityInputRef = useRef(null);
   const descriptionRef = useRef({});
@@ -43,6 +49,7 @@ const FacilitiesInput = () => {
   };
 
   const submitHandler = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (facilityName === "") {
       facilityInputRef.current.style.border = "1px solid red";
@@ -67,29 +74,49 @@ const FacilitiesInput = () => {
         if (querySnapshot.empty) {
           uploadImageToFirebase(img, "image", setProgress)
             .then(async (downloadURL) => {
-              // Handle the uploaded image URL here
-              console.log("Image URL:", downloadURL);
+              setProgress(0);
               // Add a Firestore document with the image downloadURL
-              await addDoc(facilitiesCollectionRef, {
+              const data = await addDoc(facilitiesCollectionRef, {
                 facilityName: facilityName,
                 description: description,
-                image: downloadURL, // Store the image URL
+                image: downloadURL,
                 timestamp: Timestamp.now(),
               });
+
+              dispatch(
+                addFacilities({
+                  facilityName: facilityName,
+                  description: description,
+                  image: downloadURL,
+                  timestamp: Timestamp.now(),
+                  id: data.id,
+                })
+              );
+
+              setSelectedImage(null);
+              useState(null);
+              setFacilityName("");
+              setDescription("");
             })
             .catch((error) => {
               // Handle any errors during the upload
               console.error("Error uploading image:", error);
               setError("Error uploading image");
+            })
+            .finally(() => {
+              setLoading(false);
             });
         } else {
           console.log("Facility with this name already exists");
           setError("Facility with this name already exists");
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
         setError("Error occured");
       }
+    }else{
+      setLoading(false)
     }
   };
 
@@ -115,12 +142,16 @@ const FacilitiesInput = () => {
       </div>
 
       {error ? (
-          <input className={styles.error_input} value={error} disabled/>
+        <input className={styles.error_input} value={error} disabled />
       ) : null}
+
+      {progress > 0 && <ProgressBar progress={progress} />}
 
       <SelectImage onChange={handleFileChange} selectedImage={selectedImage} />
 
-      <button type="submit">Submit</button>
+      <button type="submit">
+        {loading ? <ClipLoader color="#fff" /> : "Submit"}
+      </button>
     </form>
   );
 };
