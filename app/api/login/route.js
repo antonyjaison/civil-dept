@@ -35,10 +35,7 @@ export async function POST(request) {
     const docRef = doc(usersCollectionRef, data.data.email);
 
     try {
-      console.log("Before getDoc");
       const docSnap = await getDoc(docRef);
-      console.log("After getDoc");
-
       console.log("Exists",docSnap.exists())
 
       if (!docSnap.exists()) {

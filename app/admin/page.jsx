@@ -14,7 +14,7 @@ const AdminPage = () => {
   };
 
   const tabs = Object.keys(tabContents);
-  const [selectedTab, setSelectedTab] = useState(tabs[1]);
+  const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
   const changeTab = (tab) => {
     setSelectedTab(tab);
@@ -43,7 +43,9 @@ const AdminPage = () => {
           {/* Input section */}
           {tabContents[selectedTab]}
         </div>
-        <div className={`col-lg-5`}></div>
+        <div className={`col-lg-5`}>
+          
+        </div>
       </div>
     </div>
   );

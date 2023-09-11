@@ -6,7 +6,7 @@ import verifyEmail from "@util/verifyEmail";
 import verifyPhoneNumber from "@util/verifyPhone";
 
 const FacultyInput = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [img, setImg] = useState(null);
 
   const handleFileChange = (e) => {
@@ -15,7 +15,7 @@ const FacultyInput = () => {
     if (selectedFile) {
       setImg(selectedFile);
       const imageUrl = URL.createObjectURL(selectedFile);
-      setSelectedImage(imageUrl);
+      setSelectedImageUrl(imageUrl);
     }
   };
 
@@ -99,7 +99,7 @@ const FacultyInput = () => {
         placeholder="eg. 9876543210"
       />
 
-      <SelectImage onChange={handleFileChange} selectedImage={selectedImage} />
+      <SelectImage onChange={handleFileChange} selectedImage={selectedImageUrl} />
 
       <button type="submit">Submit</button>
     </form>

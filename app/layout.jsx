@@ -1,6 +1,7 @@
 import "./globals.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import { Inter, Poppins } from "next/font/google";
+import { Providers } from "./redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const poppins = Poppins({
@@ -16,7 +17,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
