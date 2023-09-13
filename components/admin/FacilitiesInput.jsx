@@ -51,74 +51,83 @@ const FacilitiesInput = () => {
   const submitHandler = async (e) => {
     setLoading(true);
     e.preventDefault();
+  
+    // Clear any previous error messages
+    setError(null);
+  
     if (facilityName === "") {
       facilityInputRef.current.style.border = "1px solid red";
+      setLoading(false); // Reset loading state
+      return;
     }
     if (description === "") {
       descriptionRef.current.style.border = "1px solid red";
+      setLoading(false); // Reset loading state
+      return;
     }
     if (img === null) {
       alert("Select an image");
+      setLoading(false); // Reset loading state
+      return;
     }
-
-    if ((facilityName, description, img)) {
-      const facilitiesCollectionRef = collection(db, "facilities");
-      const queryRef = query(
-        facilitiesCollectionRef,
-        where("facilityName", "==", facilityName)
-      );
-
-      try {
-        const querySnapshot = await getDocs(queryRef);
-
-        if (querySnapshot.empty) {
-          uploadImageToFirebase(img, "image", setProgress)
-            .then(async (downloadURL) => {
-              setProgress(0);
-              // Add a Firestore document with the image downloadURL
-              const data = await addDoc(facilitiesCollectionRef, {
+  
+    const facilitiesCollectionRef = collection(db, "facilities");
+    const queryRef = query(
+      facilitiesCollectionRef,
+      where("facilityName", "==", facilityName)
+    );
+  
+    try {
+      const querySnapshot = await getDocs(queryRef);
+  
+      if (querySnapshot.empty) {
+        uploadImageToFirebase(img, "image", setProgress)
+          .then(async (downloadURL) => {
+            setProgress(0);
+            const time = new Date().toISOString(); // Use a serializable format
+  
+            // Add a Firestore document with the image downloadURL
+            const data = await addDoc(facilitiesCollectionRef, {
+              facilityName: facilityName,
+              description: description,
+              image: downloadURL,
+              timestamp: time,
+            });
+  
+            dispatch(
+              addFacilities({
                 facilityName: facilityName,
                 description: description,
                 image: downloadURL,
-                timestamp: Timestamp.now(),
-              });
-
-              dispatch(
-                addFacilities({
-                  facilityName: facilityName,
-                  description: description,
-                  image: downloadURL,
-                  timestamp: Timestamp.now(),
-                  id: data.id,
-                })
-              );
-
-              setSelectedImage(null);
-              useState(null);
-              setFacilityName("");
-              setDescription("");
-            })
-            .catch((error) => {
-              // Handle any errors during the upload
-              console.error("Error uploading image:", error);
-              setError("Error uploading image");
-            })
-            .finally(() => {
-              setLoading(false);
-            });
-        } else {
-          console.log("Facility with this name already exists");
-          setError("Facility with this name already exists");
-          setLoading(false);
-        }
-      } catch (error) {
-        console.log(error);
-        setError("Error occured");
+                timestamp: time,
+                id: data.id,
+              })
+            );
+  
+            setSelectedImage(null); // Assuming you meant to clear this state
+            setImg(null); // Reset image state
+            setFacilityName("");
+            setDescription("");
+            setLoading(false); // Reset loading state
+          })
+          .catch((error) => {
+            // Handle any errors during the upload
+            console.error("Error uploading image:", error);
+            setError("Error uploading image");
+            setLoading(false); // Reset loading state
+          });
+      } else {
+        console.log("Facility with this name already exists");
+        setError("Facility with this name already exists");
+        setLoading(false); // Reset loading state
       }
-    }else{
-      setLoading(false)
+    } catch (error) {
+      console.error(error);
+      setError("Error occurred");
+      setLoading(false); // Reset loading state
     }
   };
+  
 
   return (
     <form className={`p-5 ${styles.form_section}`} onSubmit={submitHandler}>

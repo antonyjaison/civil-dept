@@ -1,9 +1,15 @@
-import React from 'react'
+import AchivementsInput from "@components/admin/AchivementsInput";
+import styles from "@styles/adminPage.module.scss";
 
 const AchievementsA = () => {
   return (
-    <div>AchievementsA</div>
-  )
-}
+    <div className={`row`}>
+      <div className={`col-lg-6`}>
+        <AchivementsInput/>
+      </div>
+      <div className={`col-lg-6`}></div>
+    </div>
+  );
+};
 
-export default AchievementsA
+export default AchievementsA;

@@ -1,33 +1,24 @@
 "use client";
 
-import FacilitiesInput from "@components/admin/FacilitiesInput";
 import styles from "@styles/adminPage.module.scss";
+import FacilitiesInput from "@components/admin/FacilitiesInput";
 import AdminDeleteButton from "@components/admin/AdminDeleteButton";
-import { query, collection, orderBy, getDocs } from "firebase/firestore";
-import db from "@firebase/config";
+
 import { useEffect } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
+import getDetailsFromFirebase from "@util/getDetailsFromFirebase";
 import { setFacilities } from "@app/redux/features/facilities/facilitiesSlice";
+import { deleteFacility } from "@app/redux/features/facilities/facilitiesSlice";
 
-const FacilitiesA = async () => {
+const FacilitiesA = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getFacilities = async () => {
-      const q = query(
-        collection(db, "facilities"),
-        orderBy("timestamp", "desc")
-      );
-      const querySnapshot = await getDocs(q);
-
-      const data = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      dispatch(setFacilities(data));
+    const getDetails = async () => {
+      const facilities = await getDetailsFromFirebase("facilities");
+      dispatch(setFacilities(facilities));
     };
-    getFacilities();
+    getDetails();
   }, []);
 
   const facilities = useSelector((state) => state.facility.facilities);
@@ -42,10 +33,14 @@ const FacilitiesA = async () => {
             facilities.map((d) => {
               console.log(d);
               return (
-                <div className={styles.facility_output_card}>
+                <div key={d.id} className={styles.facility_output_card}>
                   <div className={styles.card_content}>
                     <h3>{d.facilityName}</h3>
-                    <AdminDeleteButton id={d.id} />
+                    <AdminDeleteButton
+                      id={d.id}
+                      collection="facilities"
+                      dispatchFunction={deleteFacility}
+                    />
                   </div>
                   <hr />
                 </div>

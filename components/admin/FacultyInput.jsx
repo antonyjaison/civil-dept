@@ -1,13 +1,37 @@
+"use client";
+
 import InputGroup from "./InputGroup";
 import SelectImage from "./SelectImage";
-import { useState,useRef } from "react";
-import styles from '@styles/adminPage.module.scss'
+import { useState, useRef,useEffect } from "react";
+import styles from "@styles/adminPage.module.scss";
 import verifyEmail from "@util/verifyEmail";
 import verifyPhoneNumber from "@util/verifyPhone";
+
+import {
+  Timestamp,
+  collection,
+  getDocs,
+  query,
+  where,
+  addDoc,
+} from "firebase/firestore";
+import db from "@firebase/config";
+import uploadImageToFirebase from "@util/uploadImage";
+import ClipLoader from "react-spinners/ClipLoader";
+
+import { useDispatch } from "react-redux";
+import ProgressBar from "./ProgressBar";
+import { addFaculty } from "@app/redux/features/faculty/facultySlice";
 
 const FacultyInput = () => {
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [img, setImg] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+
+
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]; // Get the selected file
@@ -29,8 +53,9 @@ const FacultyInput = () => {
   const facultyEmailRef = useRef(null);
   const facultyPhoneRef = useRef(null);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+    setError("")
 
     if (facultyName === "") {
       facultyNameRef.current.style.border = "1px solid red";
@@ -55,13 +80,71 @@ const FacultyInput = () => {
       verifyPhoneNumber(facultyPhone) &&
       img
     ) {
-      console.log(
-        facultyName,
-        facultyDesignation,
-        facultyEmail,
-        facultyPhone,
-        img
+      setLoading(true)
+      const facultiesCollectionRef = collection(db, "faculties");
+      const queryRef = query(
+        facultiesCollectionRef,
+        where("facultyName", "==", facultyName)
       );
+
+      try {
+        const querySnapshot = await getDocs(queryRef);
+
+        if (querySnapshot.empty) {
+          uploadImageToFirebase(img, "faculty", setProgress)
+            .then(async (downloadURL) => {
+              setProgress(0);
+              const time = Timestamp.now().toString()
+              // Add a Firestore document with the image downloadURL
+              const data = await addDoc(facultiesCollectionRef, {
+                facultyName: facultyName,
+                facultyEmail: facultyEmail,
+                facultyPhone: facultyPhone,
+                facultyDesignation: facultyDesignation,
+                image: downloadURL,
+                timestamp: time,
+              });
+
+              console.log(data.id);
+
+              dispatch(
+                addFaculty({
+                  facultyName: facultyName,
+                  facultyEmail: facultyEmail,
+                  facultyPhone: facultyPhone,
+                  facultyDesignation: facultyDesignation,
+                  image: downloadURL,
+                  timestamp: time,
+                  id: data.id,
+                })
+              );
+
+              setSelectedImageUrl(null);
+              setImg(null);
+              setFacultyName("");
+              setFacultyDesignation("");
+              setFacultyEmail("");
+              setFacultyPhone("");
+            })
+            .catch((error) => {
+              // Handle any errors during the upload
+              console.error("Error uploading image:", error);
+              setError("Error uploading image");
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+        } else {
+          console.log("Faculty with this name already exists");
+          setError("Faculty with this name already exists");
+          setLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setError("Error occured");
+      }finally{
+        setLoading(false)
+      }
     }
   };
   return (
@@ -99,9 +182,20 @@ const FacultyInput = () => {
         placeholder="eg. 9876543210"
       />
 
-      <SelectImage onChange={handleFileChange} selectedImage={selectedImageUrl} />
+      <SelectImage
+        onChange={handleFileChange}
+        selectedImage={selectedImageUrl}
+      />
 
-      <button type="submit">Submit</button>
+      {error ? (
+        <input className={styles.error_input} value={error} disabled />
+      ) : null}
+
+      {progress > 0 ? <ProgressBar progress={progress} /> : null}
+
+      <button disabled={loading} type="submit">
+        {loading ? <ClipLoader color="#fff"/> : "Submit"}
+      </button>
     </form>
   );
 };

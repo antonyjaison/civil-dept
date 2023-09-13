@@ -3,21 +3,20 @@
 import styles from "@styles/adminPage.module.scss";
 import { deleteDoc, doc } from "firebase/firestore";
 import db from "@firebase/config";
-import { deleteFacility } from "@app/redux/features/facilities/facilitiesSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 
-const AdminDeleteButton = ({ id }) => {
+const AdminDeleteButton = ({ id,collection,dispatchFunction }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const deletedDocRef = await deleteDoc(doc(db, "facilities", id));
+      const deletedDocRef = await deleteDoc(doc(db, collection, id));
       console.log("Document successfully deleted:", deletedDocRef);
-      dispatch(deleteFacility(id));
+      dispatch(dispatchFunction(id));
     } catch (error) {
       console.error("Error deleting document:", error);
     } finally {

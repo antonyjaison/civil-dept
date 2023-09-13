@@ -23,6 +23,7 @@ const AdminRootLayout = ({ children }) => {
                     textDecoration: "none",
                   }}
                   href={`/admin/${tab}`}
+                  key={tab}
                 >
                   <div className={styles.tab} key={tab}>
                     <p className={isActive ? styles.active_tab : null}>{tab}</p>
