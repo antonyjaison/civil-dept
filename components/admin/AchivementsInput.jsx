@@ -2,8 +2,15 @@
 
 import styles from "@styles/adminPage.module.scss";
 import { useState, useRef } from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { collection,query,where,getDocs,Timestamp,addDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  Timestamp,
+  addDoc,
+} from "firebase/firestore";
 
 import InputGroup from "./InputGroup";
 import SelectImage from "./SelectImage";
@@ -29,7 +36,6 @@ const AchivementsInput = () => {
   const paraRef = useRef(null);
 
   const dispatch = useDispatch();
-  const achivements = useSelector(state => state.achivements.achivements)
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0]; // Get the selected file
@@ -39,6 +45,11 @@ const AchivementsInput = () => {
       const imageUrl = URL.createObjectURL(selectedFile);
       setSelectedImageUrl(imageUrl);
     }
+  };
+
+  const onChangePara = (e) => {
+    paraRef.current.style.border = "none";
+    setPara(e.target.value);
   };
 
   const submitHandler = async (e) => {
@@ -92,12 +103,11 @@ const AchivementsInput = () => {
                 })
               );
 
-              //   setSelectedImageUrl(null);
-              //   setImg(null);
-              //   setFacultyName("");
-              //   setFacultyDesignation("");
-              //   setFacultyEmail("");
-              //   setFacultyPhone("");
+              setTitle("");
+              setSubHeading("");
+              setPara("");
+              setSelectedImageUrl("");
+              setImg("");
             })
             .catch((error) => {
               // Handle any errors during the upload
@@ -108,8 +118,8 @@ const AchivementsInput = () => {
               setLoading(false);
             });
         } else {
-          console.log("Faculty with this name already exists");
-          setError("Faculty with this name already exists");
+          console.log("Achivement with same title already exists");
+          setError("Achivement with same title already exists");
           setLoading(false);
         }
       } catch (error) {
@@ -120,10 +130,6 @@ const AchivementsInput = () => {
       }
     }
   };
-
-  console.log(achivements)
-
-
 
   return (
     <form className={`p-5 ${styles.form_section}`} onSubmit={submitHandler}>
@@ -143,14 +149,16 @@ const AchivementsInput = () => {
         inputRef={subHeadingRef}
         placeholder="Sub title of the achivement"
       />
-      <InputGroup
-        name={para}
-        setName={setPara}
-        nameFor="Paragraph"
-        type="text"
-        inputRef={paraRef}
-        placeholder=""
-      />
+
+      <div className={styles.input_group}>
+        <label>Paragraph</label>
+        <textarea
+          ref={paraRef}
+          value={para}
+          className="text_area"
+          onChange={onChangePara}
+        />
+      </div>
 
       <SelectImage
         onChange={handleFileChange}
