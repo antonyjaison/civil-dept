@@ -40,7 +40,9 @@ const Login = ({ setLogin, isLogin, setUserExist }) => {
       const data = await res.json();
       setError("");
       if (data.success) {
-        localStorage.setItem("email", JSON.stringify(data.email));
+        if (!(typeof localStorage !== "undefined")) {
+          localStorage.setItem("email", JSON.stringify(data.email));
+        }
         router.push(`/civil-library/${process.env.NEXT_PUBLIC_INITIAL_FOLDER}`);
       }
     } catch (error) {

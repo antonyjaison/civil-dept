@@ -15,7 +15,7 @@ const Dashboard = async ({ params }) => {
         <h2>Dashboard</h2>
         <div className={styles.nav_links}>
           {links.map((link) => (
-            <span>{link}/</span>
+            <span key={link}>{link}/</span>
           ))}
         </div>
       </div>
