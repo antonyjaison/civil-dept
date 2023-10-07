@@ -10,7 +10,7 @@ const PdfCard = ({ name, id, type }) => {
         <div className={styles.top}>
           <div className={styles.icons}>
             <img src="/icons/pdf.svg" alt="pdf_icon" />
-            <AddToFav type={type} id={id} />
+            <AddToFav type={type} id={id} name={name} />
           </div>
           <p>{name}</p>
         </div>

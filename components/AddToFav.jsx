@@ -12,11 +12,18 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import db from "@firebase/config";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addFavorite,
+  deleteFavorite,
+} from "@app/redux/features/favorites/favoritesSlice";
 
-const AddToFav = ({ id, type }) => {
+const AddToFav = ({ id, type, name }) => {
+  const { favorites } = useSelector((state) => state.favorites);
+  const dispatch = useDispatch();
   const addToFavorite = async (e) => {
     e.preventDefault();
-    if (!getUser()){
+    if (!getUser()) {
       alert("Please login to continue...");
       return;
     }
@@ -29,12 +36,23 @@ const AddToFav = ({ id, type }) => {
 
       if (!docSnap.exists()) {
         await setDoc(docRef, {
-          file: id,
+          id: id + email,
+          fileId: id,
+          name: name,
           type: type,
           email: email,
           timestamp: Timestamp.now(),
         }).then(() => {
           console.log("Added");
+          dispatch(
+            addFavorite({
+              id: id + email,
+              fileId: id,
+              name: name,
+              type: type,
+              email: email,
+            })
+          );
           setInFavorites(true);
         });
       } else {
@@ -53,41 +71,29 @@ const AddToFav = ({ id, type }) => {
     try {
       const favDocRef = doc(db, "favorites", id + email);
       await deleteDoc(favDocRef);
+      dispatch(deleteFavorite(id + email));
+
       setInFavorites(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const checkInFavorites = async (folder_id) => {
-    if (!getUser()) return;
-    const email = getUser();
+  const checkInFavorites = (folder_id) => {
+    if (!getUser()) return false;
 
-    try {
-      const favoritesDocRef = doc(db, "favorites", folder_id + email);
-      const docSnap = await getDoc(favoritesDocRef);
-
-      if (!docSnap.exists()) {
-        console.log(false);
-        return false;
-      } else {
-        console.log(true);
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
+    const exists = favorites.find((favorite) => favorite.fileId === folder_id);
+    if (exists) {
+      return true;
     }
+    return false;
   };
 
   const [inFavorites, setInFavorites] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const isItemInFavorites = await checkInFavorites(id);
-      setInFavorites(isItemInFavorites);
-    };
-
-    fetchData();
+    const isItemInFavorites = checkInFavorites(id);
+    setInFavorites(isItemInFavorites);
   }, [id]);
 
   return (

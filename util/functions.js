@@ -1,24 +1,14 @@
 
 const setUser = (email) => {
-  if (!(typeof localStorage !== "undefined")) {
-    localStorage.setItem("email", JSON.stringify(email));
-  }
+  localStorage.setItem("email", JSON.stringify(email));
 };
 
 const isUserExist = () => {
-  if (!(typeof localStorage !== "undefined")) {
-    return localStorage.getItem("email")? true : false;
-  }
-
-  return false;
+  return localStorage.getItem("email") ? true : false;
 };
 
 const getUser = () => {
-  if (!(typeof localStorage !== "undefined")) {
-    return JSON.parse(localStorage.getItem("email"));
-  }
-
-  return null;
-}
+  return JSON.parse(localStorage.getItem("email"));
+};
 
 export {setUser , isUserExist,getUser}

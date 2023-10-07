@@ -11,69 +11,76 @@ const schema = zfd.formData({
 
 
 export async function POST(request) {
-  const { email, password } = await request.json();
-  console.log(email,password)
-  const data = schema.safeParse({
-    email,
-    password,
-  });
-
-  console.log(data.data)
-
-  if (data.error) {
-    return NextResponse.json(data.error, {
-      status: 400,
+  try {
+    const { email, password } = await request.json();
+    console.log(email, password);
+    const data = schema.safeParse({
+      email,
+      password,
     });
-  }
 
+    console.log(data.data);
 
-  if (
-    data.data.email.includes("gecskp.ac.in") &&
-    data.data.password === process.env.LOGIN_PASSWORD
-  ) {
-    const usersCollectionRef = collection(db, "users");
-    const docRef = doc(usersCollectionRef, data.data.email);
+    if (data.error) {
+      return NextResponse.json(data.error, {
+        status: 400,
+      });
+    }
 
-    try {
-      const docSnap = await getDoc(docRef);
-      console.log("Exists",docSnap.exists())
+    if (
+      data.data.email.includes("gecskp.ac.in") &&
+      data.data.password === process.env.LOGIN_PASSWORD
+    ) {
+      const usersCollectionRef = collection(db, "users");
+      const docRef = doc(usersCollectionRef, data.data.email);
 
-      if (!docSnap.exists()) {
-        // If the document does not exist, set the data for the new document
+      try {
+        const docSnap = await getDoc(docRef);
+        console.log("Exists", docSnap.exists());
 
-        await setDoc(docRef, {
-          email: data.data.email,
-          timestamp: Timestamp.now(),
-        });
-        console.log("user is setted");
-        return NextResponse.json({ success: true, email: data.data.email });
-      } else {
-        // If the document already exists, you can handle the situation accordingly
-        console.log("User with this email already exists.");
-        // setUser(docSnap.data().email);
+        if (!docSnap.exists()) {
+          // If the document does not exist, set the data for the new document
+
+          await setDoc(docRef, {
+            email: data.data.email,
+            timestamp: Timestamp.now(),
+          });
+          console.log("user is setted");
+          return NextResponse.json({ success: true, email: data.data.email });
+        } else {
+          // If the document already exists, you can handle the situation accordingly
+          console.log("User with this email already exists.");
+          // setUser(docSnap.data().email);
+        }
+      } catch (error) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: error,
+          },
+          {
+            status: 500,
+          }
+        );
       }
-    } catch (error) {
+    } else {
       return NextResponse.json(
         {
           success: false,
-          message: error,
+          message: "Invalid credentials",
         },
         {
-          status: 500,
+          status: 403,
         }
       );
     }
-  } else {
+
+    return NextResponse.json({ success: true, email: data.data.email });
+  } catch (err) {
+    console.log(err);
     return NextResponse.json(
-      {
-        success: false,
-        message: "Invalid credentials",
-      },
-      {
-        status: 403,
-      }
+      { success: false, message: err.message },
+      { status: 500 }
     );
   }
-
-  return NextResponse.json({ success: true, email: data.data.email });
 }
