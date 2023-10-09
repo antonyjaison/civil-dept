@@ -32,13 +32,6 @@ const Librarylayout = ({ children }) => {
     setIsMoving((prevIsMoving) => !prevIsMoving);
   };
 
-  const goToDashboard = () => {
-    router.push(`/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN`);
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      setIsMoving((prevIsMoving) => !prevIsMoving);
-    }
-  };
-
   return (
     <>
       <main className={styles.container}>
@@ -49,8 +42,11 @@ const Librarylayout = ({ children }) => {
           </div>
 
           <div className={styles.sidebar_cards}>
-            <DepartmentCard name="Dashboard" onClick={goToDashboard} />
-            <DepartmentCard name="Favorites" />
+            <DepartmentCard
+              name="Dashboard"
+              href="/civil-library/file/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN"
+            />
+            <DepartmentCard name="Favorites" href="/civil-library/favorites" />
           </div>
 
           <button>

@@ -2,7 +2,7 @@
 
 import hero from "@styles/hero.module.scss";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "@components/Logo";
 import Login from "./Login";
 import { isUserExist } from "@util/functions";
@@ -10,7 +10,11 @@ import { isUserExist } from "@util/functions";
 const Hero = ({ name, image }) => {
   const [mobileNav, setMobileNav] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [userExist, setUserExist] = useState(isUserExist());
+  const [userExist, setUserExist] = useState(false);
+
+  useEffect(() => {
+    setUserExist(isUserExist());
+  }, []);
 
   const setLogin = () => {
     setIsLogin(!isLogin);
@@ -43,16 +47,15 @@ const Hero = ({ name, image }) => {
   const splitName = (name) => {
     let splitedName = name.split(" ");
     let firstText = splitedName[0];
-    
-    let otherString = '';
-  
+
+    let otherString = "";
+
     for (let i = 1; i < splitedName.length; i++) {
-      otherString = otherString + ' ' + splitedName[i];
+      otherString = otherString + " " + splitedName[i];
     }
-  
+
     return `${firstText}<br/>${otherString}`;
   };
-  
 
   return (
     <main style={background} className={hero.wrapper}>
@@ -112,10 +115,14 @@ const Hero = ({ name, image }) => {
         <div className={`container sm_d_none ${hero.line}`} />
       </div>
 
-      <h1 className={`container`}>
+      <h1
+        dangerouslySetInnerHTML={{
+          __html: checkLength(name) ? splitName(name) : name,
+        }}
+        className={`container`}
+      >
         {/* Explore <br />
         Civil Engineering */}
-        {checkLength(name) ? splitName(name) : name}
       </h1>
 
       {isLogin && (

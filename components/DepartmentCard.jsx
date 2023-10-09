@@ -1,13 +1,16 @@
 'use client'
 import deptCard from '@styles/depCard.module.scss'
+import Link from "next/link";
 
-const DepartmentCard = ({ name, onClick }) => {
+const DepartmentCard = ({ name, href }) => {
   return (
-    <div onClick={onClick} className={deptCard.wrapper}>
+    <Link href={href}>
+      <div className={deptCard.wrapper}>
         <img src="/icons/file_white.svg" alt="file_icon" />
         <p>{name}</p>
-    </div>
-  )
-}
+      </div>
+    </Link>
+  );
+};
 
 export default DepartmentCard

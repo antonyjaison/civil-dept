@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.0",
     "@google-cloud/local-auth": "^2.1.0",
     "@popperjs/core": "^2.11.8",
     "@react-spring/web": "^9.7.3",
@@ -27,6 +28,7 @@
     "zod-form-data": "^2.0.1"
   },
   "devDependencies": {
+    "encoding": "^0.1.13",
     "sass": "^1.63.2"
   }
 }
