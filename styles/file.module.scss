@@ -12,6 +12,8 @@
   flex-direction: column;
   justify-content: space-between;
   transition: 0.2s;
+  word-wrap: break-word;
+  word-break: break-word;
   &:hover{
     background-color: #f2f2f2;
   }
