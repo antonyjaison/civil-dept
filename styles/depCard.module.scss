@@ -9,19 +9,23 @@
   gap: 20px;
   width: 278px;
   height: 60px;
+  color: hsl(0, 0%, 60%);
+
+  &:hover {
+    color: #f2f2f2;
+  }
   p {
     margin: 0;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 130%;
-    color: #fff;
   }
 }
 
-.active{
-  background: linear-gradient(var(--gradient));
-}
+
+
+
 
 @media(max-width:750px){
     .wrapper {    

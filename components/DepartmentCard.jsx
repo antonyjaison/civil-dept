@@ -1,12 +1,15 @@
-'use client'
-import deptCard from '@styles/depCard.module.scss'
-import Link from "next/link";
+"use client"
 
-const DepartmentCard = ({ name, href }) => {
+import deptCard from '@styles/depCard.module.scss'
+import { Folder } from 'lucide-react';
+import Link from "next/link";
+import { useRouter } from 'next/navigation';
+
+const DepartmentCard = ({ name, href, active }) => {
   return (
-    <Link href={href}>
-      <div className={deptCard.wrapper}>
-        <img src="/icons/file_white.svg" alt="file_icon" />
+    <Link style={{textDecoration: "none"}} href={href}>
+      <div className={`${deptCard.wrapper} ${active ? "active": ""}`}>
+        <Folder />
         <p>{name}</p>
       </div>
     </Link>
