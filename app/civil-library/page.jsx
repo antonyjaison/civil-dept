@@ -1,9 +1,16 @@
-import React from 'react'
+import DepartmentAbout from "@components/DepartmentAbout";
+import Footer from "@components/Footer";
+import Hero from "@components/Hero";
+import React from "react";
 
 const CivilPage = () => {
   return (
-    <div>CivilPage</div>
-  )
-}
+    <main>
+      <Hero name="Department Library" image="/images/library-hero.png" />
+      <DepartmentAbout />
+      <Footer />
+    </main>
+  );
+};
 
-export default CivilPage
+export default CivilPage;
