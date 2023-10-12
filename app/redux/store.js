@@ -5,6 +5,7 @@ import facilityReducer from "./features/facilities/facilitiesSlice";
 import facultyReducer from "./features/faculty/facultySlice";
 import achivementReducer from "./features/achivements/achivementsSlice";
 import favoritesSlice from "./features/favorites/favoritesSlice";
+import placementsReducer from "./features/placement/placementSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     faculty: facultyReducer,
     achivements: achivementReducer,
     favorites: favoritesSlice,
+    placement: placementsReducer,
   },
 });

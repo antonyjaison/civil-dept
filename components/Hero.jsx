@@ -65,7 +65,7 @@ const Hero = ({ name, image }) => {
 
           <div className={hero.links}>
             {userExist && (
-              <Link href="/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">
+              <Link href="/civil-library/file/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">
                 / Library
               </Link>
             )}
@@ -89,7 +89,7 @@ const Hero = ({ name, image }) => {
             <div className={hero.mobile_links}>
               <h1 onClick={() => setMobileNav(false)}>X</h1>
               {userExist && (
-                <Link href="/civil-library/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">
+                <Link href="/civil-library/file/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">
                   / Library
                 </Link>
               )}

@@ -2,10 +2,7 @@ import { query, collection, orderBy, getDocs } from "firebase/firestore";
 import db from "@firebase/config";
 
 const getDetailsFromFirebase = async (collectionName) => {
-    const q = query(
-      collection(db, collectionName),
-      orderBy("timestamp", "asc")
-    );
+    const q = query(collection(db, collectionName));
     const querySnapshot = await getDocs(q);
     
     const data = querySnapshot.docs.map((doc) => ({
