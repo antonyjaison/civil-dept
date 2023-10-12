@@ -91,8 +91,6 @@ const AchivementsInput = () => {
                 timestamp: time,
               });
 
-              console.log(data.id);
-
               dispatch(
                 addAchivement({
                   title: title,

@@ -23,8 +23,6 @@ const AchievementsA = () => {
   }, []);
 
   const achivements = useSelector((state) => state.achivements.achivements);
-
-  console.log(achivements);
   return (
     <div className={`row`}>
       <div className={`col-lg-6`}>
@@ -34,7 +32,6 @@ const AchievementsA = () => {
         <div className={styles.admin_output_section}>
           {achivements.length > 0 ? (
             achivements.map((d) => {
-              console.log(d.id);
               return (
                 <div key={d.id} className={styles.facility_output_card}>
                   <div className={styles.card_content}>

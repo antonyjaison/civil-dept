@@ -32,7 +32,6 @@ const FacultyA = () => {
         <div className={styles.admin_output_section}>
           {faculties.length > 0 ? (
             faculties.map((d) => {
-              console.log(d);
               return (
                 <div key={d.id} className={styles.facility_output_card}>
                   <div className={styles.card_content}>

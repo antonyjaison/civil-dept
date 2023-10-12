@@ -43,7 +43,6 @@ const AddToFav = ({ id, type, name }) => {
           email: email,
           timestamp: Timestamp.now(),
         }).then(() => {
-          console.log("Added");
           dispatch(
             addFavorite({
               id: id + email,

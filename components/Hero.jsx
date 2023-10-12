@@ -28,7 +28,7 @@ const Hero = ({ name, image }) => {
   };
 
   const background = {
-    background: `
+    backgroundImage: `
       linear-gradient(
         180deg,
         #000000 0%,
@@ -36,9 +36,13 @@ const Hero = ({ name, image }) => {
         rgba(0, 0, 0, 0) 66.67%,
         #000000 100%
       ),
-      url(${image})
+      url(${image});
+      backgroundPosition: center;
+      backgroundRepeat: no-repeat;
+      backgroundSize: cover;
     `,
   };
+  
 
   const checkLength = (name) => {
     return name.split(" ").length > 1;
@@ -69,7 +73,7 @@ const Hero = ({ name, image }) => {
                 / Library
               </Link>
             )}
-            <Link href="/achievements">/ Achievements</Link>
+            <Link href="/placements">/ Placements</Link>
             <Link href="/faculty">/ Faculty</Link>
             <Link href="/facilities">/ Facilities</Link>
             {userExist ? (
@@ -93,7 +97,7 @@ const Hero = ({ name, image }) => {
                   / Library
                 </Link>
               )}
-              <Link href="/achievements">/ Achievements</Link>
+              <Link href="/placements">/ Placements</Link>
               <Link href="/faculty">/ Faculty</Link>
               <Link href="/facilities">/ Facilities</Link>
               {!!userExist ? (
