@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main>
       <Hero name="Explore Civil Engineering" image="/images/hero.png" />
-      {/* <About /> */}
+      <About />
       <Programs />
       <Oppertunities />
       <Footer />
