@@ -1,11 +1,11 @@
 import styles from "@styles/opertunities.module.scss";
 import Image from "next/image";
 
-const Oppertunities = () => {
+const Opportunities = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.img_section}>
-        <img src='/images/illus_2.svg' alt="img"/>
+        <img src="/images/illus_2.svg" alt="img" />
       </div>
       <div className={styles.content}>
         <h1>Opportunities</h1>
@@ -23,4 +23,4 @@ const Oppertunities = () => {
   );
 };
 
-export default Oppertunities;
+export default Opportunities;

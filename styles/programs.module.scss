@@ -54,6 +54,47 @@
       --illustration-gradient,
       linear-gradient(90deg, #058999 0%, #ff827d 100%)
     );
+
+    margin-top: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-height: 9.45rem;
+
+    padding: 0.9rem 1.1rem;
+
+    p {
+      padding: 0.8em 1.25em;
+      color: #fff;
+      border-radius: 1.5em;
+      border: 1px solid #fff;
+      width: fit-content;
+      font-size: 0.675rem;
+
+      @media (min-width: 800px) {
+        font-size: 1.125rem;
+      }
+    }
+
+    h3 {
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 400;
+      line-height: 130%;
+      max-width: 197px;
+
+      @media (min-width: 800px) {
+        font-size: 1.5rem;
+        max-width: 327px;
+      }
+    }
+
+    @media (min-width: 800px) {
+      padding: 1.5rem 2.5rem;
+      min-height: 15.75rem;
+    }
   }
 }
 
@@ -69,7 +110,7 @@
   .content {
     grid-column: 1 / 2;
   }
-  .card_section{
+  .card_section {
     grid-row: 3 / 4;
   }
 }
