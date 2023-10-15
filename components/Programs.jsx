@@ -25,7 +25,8 @@ const Programs = () => {
       <div className={styles.card_section}>
         <h3>/ Bachelor</h3>
         <div className={styles.card}>
-
+          <p>/&nbsp;Bachelor</p>
+          <h3>Bachelor’s of Technology in Civil Engineering</h3>
         </div>
       </div>
     </div>

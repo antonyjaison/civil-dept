@@ -10,10 +10,18 @@ function DepartmentAbout() {
       <div className={styles.content}>
         <div className={styles.imgContainer}>
           <Image
+            className={styles.desktop}
             style={{ width: "100%" }}
             src="/images/spring.png"
             width={375}
             height={697}
+          />
+          <Image
+            className={styles.mobile}
+            style={{ width: "100%" }}
+            src="/images/illus_1_mobile.svg"
+            width={300}
+            height={280}
           />
         </div>
         <div className={styles.info}>
