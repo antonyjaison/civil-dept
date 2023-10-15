@@ -21,9 +21,11 @@ const Login = ({ setLogin, isLogin, setUserExist }) => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const submit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const res = await fetch("/api/login", {
         body: JSON.stringify({
@@ -35,16 +37,18 @@ const Login = ({ setLogin, isLogin, setUserExist }) => {
 
       if (!res.ok) {
         throw new Error(res.message);
+        setLoading(false)
       }
 
       const data = await res.json();
       setError("");
       if (data.success) {
-     
+        setLoading(false)
         setUser(data.email);
-        router.push(`/civil-library/${process.env.NEXT_PUBLIC_INITIAL_FOLDER}`);
+        router.push(`/civil-library/file/${process.env.NEXT_PUBLIC_INITIAL_FOLDER}`);
       }
     } catch (error) {
+      setLoading(false)
       setError(error.message);
     }
   };
@@ -54,7 +58,7 @@ const Login = ({ setLogin, isLogin, setUserExist }) => {
       <div className={styles.form_section}>
         <div className={styles.heading}>
           <h1>Login</h1>
-          <img onClick={setLogin} src="/icons/menu.svg" alt="close" />
+          <img onClick={setLogin} src="/icons/close.svg" alt="close" />
         </div>
 
         <form onSubmit={submit}>
@@ -80,7 +84,7 @@ const Login = ({ setLogin, isLogin, setUserExist }) => {
               value={Password}
             />
           </div>
-          <button>Login</button>
+          <button>{loading ? "loading..." : "Login"}</button>
         </form>
       </div>
     </div>

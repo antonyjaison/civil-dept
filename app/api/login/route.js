@@ -13,7 +13,6 @@ const schema = zfd.formData({
 export async function POST(request) {
   try {
     const { email, password } = await request.json();
-    console.log(email, password);
     const data = schema.safeParse({
       email,
       password,
@@ -36,7 +35,7 @@ export async function POST(request) {
 
       try {
         const docSnap = await getDoc(docRef);
-        console.log("Exists", docSnap.exists());
+        // console.log("Exists", docSnap.exists());
 
         if (!docSnap.exists()) {
           // If the document does not exist, set the data for the new document
@@ -45,11 +44,11 @@ export async function POST(request) {
             email: data.data.email,
             timestamp: Timestamp.now(),
           });
-          console.log("user is setted");
+          // console.log("user is setted");
           return NextResponse.json({ success: true, email: data.data.email });
         } else {
           // If the document already exists, you can handle the situation accordingly
-          console.log("User with this email already exists.");
+          // console.log("User with this email already exists.");
           // setUser(docSnap.data().email);
         }
       } catch (error) {

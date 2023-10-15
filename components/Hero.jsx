@@ -21,10 +21,8 @@ const Hero = ({ name, image }) => {
   };
 
   const setLogOut = () => {
-    // if (!(typeof window !== 'undefined')) {
-    //   localStorage.removeItem("email");
-    //   setUserExist(false);
-    // }
+      localStorage.removeItem("email");
+      setUserExist(false);
   };
 
   const background = {
