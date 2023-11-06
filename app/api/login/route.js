@@ -26,8 +26,10 @@ export async function POST(request) {
       });
     }
 
+
     if (
       data.data.email.includes("gecskp.ac.in") &&
+      data.data.email.includes("ce") &&
       data.data.password === process.env.LOGIN_PASSWORD
     ) {
       const usersCollectionRef = collection(db, "users");
