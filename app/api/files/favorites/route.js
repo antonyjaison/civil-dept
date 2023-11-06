@@ -12,9 +12,9 @@ export async function GET(request) {
             data: doc.data()
         }));
         
-        return NextResponse(JSON.stringify({tasks}));
+        return NextResponse.json(JSON.stringify({tasks}));
     } catch (error) {
         console.error("Error fetching data:", error);
-        return NextResponse(`Internal Server Error`, { status: 500 });
+        return NextResponse.json(`Internal Server Error`, { status: 500 });
     }
 }
