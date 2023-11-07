@@ -2,10 +2,11 @@
 
 import hero from "@styles/hero.module.scss";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Logo from "@components/Logo";
 import Login from "./Login";
 import { isUserExist } from "@util/functions";
+import { usePathname } from "next/navigation";
 
 const Hero = ({ name, image }) => {
   const [mobileNav, setMobileNav] = useState(false);
@@ -25,6 +26,7 @@ const Hero = ({ name, image }) => {
       setUserExist(false);
   };
 
+
   const background = {
     backgroundImage: `
       linear-gradient(
@@ -34,12 +36,12 @@ const Hero = ({ name, image }) => {
         rgba(0, 0, 0, 0) 66.67%,
         #000000 100%
       ),
-      url(${image});
-      backgroundPosition: center;
-      backgroundRepeat: no-repeat;
-      backgroundSize: cover;
+      url(${image})
     `,
-  };
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  }
   
 
   const checkLength = (name) => {
@@ -118,13 +120,13 @@ const Hero = ({ name, image }) => {
       </div>
 
       <h1
-        dangerouslySetInnerHTML={{
-          __html: checkLength(name) ? splitName(name) : name,
-        }}
+        // dangerouslySetInnerHTML={{
+        //   __html: checkLength(name) ? splitName(name) : name,
+        // }}
         className={`container`}
       >
-        {/* Explore <br />
-        Civil Engineering */}
+        Explore <br />
+        Civil Engineering
       </h1>
 
       {isLogin && (
