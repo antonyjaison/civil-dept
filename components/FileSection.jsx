@@ -14,7 +14,7 @@ const getFiles = async (folderID) => {
     if (res.ok) {
       return res.json()
     }
-    console.log(error);
+    // console.log(error);
 };
 
 const FileSection = async ({ folderID }) => {
