@@ -5,7 +5,7 @@ import PdfCard from "./PdfCard";
 const getFiles = async (folderID) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/files?folderID=${folderID}`,
+      `${process.env.VERCEL_URL}/api/files?folderID=${folderID}`,
       {
         next: {
           revalidate: 60,
