@@ -4,7 +4,7 @@ import PdfCard from "./PdfCard";
 
 const getFiles = async (folderID) => {
     const res = await fetch(
-      `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/files?folderID=${folderID}`,
+      `${process.env.NEXT_PUBLIC_DOMAIN}/api/files?folderID=${folderID}`,
       {
         next: {
           revalidate: 60,
@@ -14,7 +14,6 @@ const getFiles = async (folderID) => {
     if (res.ok) {
       return res.json()
     }
-    // console.log(error);
 };
 
 const FileSection = async ({ folderID }) => {
