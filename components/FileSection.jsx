@@ -3,7 +3,6 @@ import styles from "@styles/filesection.module.scss";
 import PdfCard from "./PdfCard";
 
 const getFiles = async (folderID) => {
-  try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/files?folderID=${folderID}`,
       {
@@ -15,9 +14,7 @@ const getFiles = async (folderID) => {
     if (res.ok) {
       return res.json()
     }
-  } catch (error) {
     console.log(error);
-  }
 };
 
 const FileSection = async ({ folderID }) => {
