@@ -81,7 +81,7 @@ const FacilitiesInput = () => {
       const querySnapshot = await getDocs(queryRef);
   
       if (querySnapshot.empty) {
-        uploadImageToFirebase(img, "image", setProgress)
+        uploadImageToFirebase(img, "/facilities", setProgress)
           .then(async (downloadURL) => {
             setProgress(0);
             const time = new Date().toISOString(); // Use a serializable format
