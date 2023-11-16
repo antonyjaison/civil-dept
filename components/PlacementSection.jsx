@@ -1,8 +1,10 @@
 import StudentCard from "./StudentCard";
 import styles from "@styles/acheivementsSection.module.scss";
 import getDetailsFromFirebase from "@util/getDetailsFromFirebase";
+import { cookies } from "next/headers";
 
 const PlacementSection = async () => {
+  const cookieStore = cookies()
   const placements = await getDetailsFromFirebase("placements");
   return (
     <div className={styles.main_wrapper}>
