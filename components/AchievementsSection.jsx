@@ -1,18 +1,22 @@
-import styles from "@styles/acheivementsSection.module.scss";
-import AchivementCard from "./AchivementCard";
+import FacilityCard from "./FacilityCard";
+import styles from "@styles/facilitySection.module.scss";
+import getDetailsFromFirebase from "@util/getDetailsFromFirebase";
+import { cookies } from 'next/headers'
 
-const AchievementsSection = () => {
+
+const AchievementsSection = async () => {
+  const cookieStore = cookies()
+  const achievements = await getDetailsFromFirebase("achivements");
   return (
-    <div className={styles.main_wrapper}>
-        <h3 className={styles.heading}>Explore our achievements 🏆</h3>
-      <div className={styles.wrapper}>
-        <AchivementCard />
-        <AchivementCard />
-        <AchivementCard />
-        <AchivementCard />
-        <AchivementCard />
-        <AchivementCard />
-      </div>
+    <div className={`container py-4 ${styles.wrapper}`}>
+      {achievements.map((achievement) => (
+        <FacilityCard
+        key={achievement.id}
+          image={achievement.image}
+          heading={achievement.title}
+          text={achievement.para}
+        />
+      ))}
     </div>
   );
 };

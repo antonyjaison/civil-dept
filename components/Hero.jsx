@@ -73,6 +73,7 @@ const Hero = ({ name, image }) => {
                 / Library
               </Link>
             )}
+            <Link href="/achievements">/ Achievements</Link>
             <Link href="/placements">/ Placements</Link>
             <Link href="/faculty">/ Faculty</Link>
             <Link href="/facilities">/ Facilities</Link>
@@ -91,12 +92,13 @@ const Hero = ({ name, image }) => {
 
           {mobileNav ? (
             <div className={hero.mobile_links}>
-              <h1 onClick={() => setMobileNav(false)}>X</h1>
+              <h1 style={{ cursor: "pointer"}} onClick={() => setMobileNav(false)}>X</h1>
               {userExist && (
                 <Link href="/civil-library/file/1-mUzNBGS-gf0XxLc7yGUoOxFIniFsJUN">
                   / Library
                 </Link>
               )}
+              <Link href="/achievements">/ Achievements</Link>
               <Link href="/placements">/ Placements</Link>
               <Link href="/faculty">/ Faculty</Link>
               <Link href="/facilities">/ Facilities</Link>
@@ -111,7 +113,7 @@ const Hero = ({ name, image }) => {
               )}
             </div>
           ) : (
-            <p className="d_lg_none" onClick={() => setMobileNav(true)}>
+            <p style={{cursor: "pointer"}} className="d_lg_none" onClick={() => setMobileNav(true)}>
               / Menu
             </p>
           )}

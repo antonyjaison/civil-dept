@@ -23,7 +23,6 @@ import { addAchivement } from "@app/redux/features/achivements/achivementsSlice"
 
 const AchivementsInput = () => {
   const [title, setTitle] = useState("");
-  const [subHeading, setSubHeading] = useState("");
   const [para, setPara] = useState("");
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [img, setImg] = useState(null);
@@ -32,7 +31,6 @@ const AchivementsInput = () => {
   const [error, setError] = useState("");
 
   const titleRef = useRef(null);
-  const subHeadingRef = useRef(null);
   const paraRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -85,7 +83,6 @@ const AchivementsInput = () => {
               // Add a Firestore document with the image downloadURL
               const data = await addDoc(achivementsCollectionRef, {
                 title: title,
-                subHeading: subHeading,
                 para: para,
                 image: downloadURL,
                 timestamp: time,
@@ -94,7 +91,6 @@ const AchivementsInput = () => {
               dispatch(
                 addAchivement({
                   title: title,
-                  subHeading: subHeading,
                   para: para,
                   image: downloadURL,
                   timestamp: time,
@@ -102,7 +98,6 @@ const AchivementsInput = () => {
               );
 
               setTitle("");
-              setSubHeading("");
               setPara("");
               setSelectedImageUrl("");
               setImg("");
@@ -138,14 +133,6 @@ const AchivementsInput = () => {
         type="text"
         inputRef={titleRef}
         placeholder="Title of the achivement"
-      />
-      <InputGroup
-        name={subHeading}
-        setName={setSubHeading}
-        nameFor="Sub title"
-        type="text"
-        inputRef={subHeadingRef}
-        placeholder="Sub title of the achivement"
       />
 
       <div className={styles.input_group}>
