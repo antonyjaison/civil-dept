@@ -76,6 +76,7 @@ const Hero = ({ name, image }) => {
             <Link href="/achievements">/ Achievements</Link>
             <Link href="/placements">/ Placements</Link>
             <Link href="/faculty">/ Faculty</Link>
+            <Link href="/gallery">/ Gallery</Link>
             <Link href="/facilities">/ Facilities</Link>
             {userExist ? (
               <Link href="#" onClick={setLogOut}>
@@ -101,6 +102,7 @@ const Hero = ({ name, image }) => {
               <Link href="/achievements">/ Achievements</Link>
               <Link href="/placements">/ Placements</Link>
               <Link href="/faculty">/ Faculty</Link>
+              <Link href="/faculty">/ Gallery</Link>
               <Link href="/facilities">/ Facilities</Link>
               {!!userExist ? (
                 <Link href="#" onClick={setLogOut}>
