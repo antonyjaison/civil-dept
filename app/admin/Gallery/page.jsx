@@ -1,51 +1,83 @@
 "use client";
 
 import styles from "@styles/adminPage.module.scss";
-import { useEffect } from "react";
+import GalleryInput  from "@components/admin/GalleryInput";
+import AdminDeleteButton from "@components/admin/AdminDeleteButton";
 
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getDetailsFromFirebase from "@util/getDetailsFromFirebase";
-import { setFaculties } from "@app/redux/features/faculty/facultySlice";
-import AdminDeleteButton from "@components/admin/AdminDeleteButton";
-import { deleteFaculty } from "@app/redux/features/faculty/facultySlice";
-import GalleryInput from "@components/admin/GalleryInput";
+import { setGalleryImages } from "@app/redux/features/gallery/gallerySlice"; // Update with your actual slice
+import { deleteGalleryImage } from "@app/redux/features/gallery/gallerySlice"; // Update with your actual slice
+
 
 const Gallery = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const galleryImages = useSelector((state) => state.gallery.galleryImages); // Update with your actual slice
 
-  // useEffect(() => {
-  //   const getDetails = async () => {
-  //     const faculties = await getDetailsFromFirebase("faculties");
-  //     dispatch(setFaculties(faculties));
-  //   };
-  //   getDetails();
-  // }, []);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const faculties = useSelector((state) => state.faculty.faculties);
+  const handleImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedImage(event.target.files[0]);
+    }
+  };
+
+  const uploadImage = async () => {
+    if (selectedImage) {
+      try {
+        const imageRef = ref(storage, `gallery/${selectedImage.name}`); // Adjust 'gallery' if needed
+        await uploadBytes(imageRef, selectedImage);
+
+        // Get download URL
+        const downloadURL = await getDownloadURL(imageRef);
+
+        // Add image data to Firestore
+        const galleryCollectionRef = collection(db, "gallery");
+        await setDoc(doc(galleryCollectionRef), {
+          imageUrl: downloadURL,
+          timestamp: new Date(),
+        });
+
+        setSelectedImage(null); 
+      } catch (error) {
+        console.error('Error uploading image:', error); 
+      }
+    }
+  };
+
+  // Fetch images from Firestore on component mount
+  useEffect(() => {
+    const fetchImages = async () => {
+      const images = await getDetailsFromFirebase("gallery");
+      dispatch(setGalleryImages(images)); // Update with your actual slice
+    };
+
+    fetchImages();
+  }, []);
 
   return (
     <div className={`row`}>
       <div className={`col-lg-6`}>
-        <GalleryInput />
+        <GalleryInput onChange={handleImageChange} /> 
+        <button onClick={uploadImage} disabled={!selectedImage}>
+          Upload Image
+        </button>
       </div>
       <div className={`col-lg-6`}>
         <div className={styles.admin_output_section}>
-          {faculties.length > 0 ? (
-            faculties.map((d) => {
-              return (
-                <div key={d.id} className={styles.facility_output_card}>
-                  <div className={styles.card_content}>
-                    <h3>{d.facultyName}</h3>
-                    <AdminDeleteButton
-                      id={d.id}
-                      collection="faculties"
-                      dispatchFunction={deleteFaculty}
-                    />
-                  </div>
-                  <hr />
-                </div>
-              );
-            })
+          {galleryImages.length > 0 ? (
+            galleryImages.map((image) => (
+              <div key={image.id} className={styles.gallery_output_card}>
+                <img src={image.imageUrl} alt="Gallery Image" />
+                {/* Add delete functionality if needed */}
+                <AdminDeleteButton
+                  id={image.id}
+                  collection="gallery"
+                  dispatchFunction={deleteGalleryImage} // Update with your actual slice action
+                />
+              </div>
+            ))
           ) : (
             <p>Nothing To show</p>
           )}
