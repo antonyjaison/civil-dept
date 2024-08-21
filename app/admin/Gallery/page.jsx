@@ -37,6 +37,7 @@ const Gallery = () => {
         await setDoc(doc(galleryCollectionRef), {
           imageUrl: downloadURL,
           timestamp: new Date(),
+          source: "admin"
         });
 
         setSelectedImage(null); 
