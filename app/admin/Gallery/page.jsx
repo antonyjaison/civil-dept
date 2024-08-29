@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@styles/adminPage.module.scss";
-import GalleryInput  from "@components/admin/GalleryInput";
+import GalleryInput from "@components/admin/GalleryInput";
 import AdminDeleteButton from "@components/admin/AdminDeleteButton";
 
 import { useEffect, useState } from "react";
@@ -40,9 +40,9 @@ const Gallery = () => {
           source: "admin"
         });
 
-        setSelectedImage(null); 
+        setSelectedImage(null);
       } catch (error) {
-        console.error('Error uploading image:', error); 
+        console.error('Error uploading image:', error);
       }
     }
   };
@@ -50,17 +50,19 @@ const Gallery = () => {
   // Fetch images from Firestore on component mount
   useEffect(() => {
     const fetchImages = async () => {
-      const images = await getDetailsFromFirebase("gallery");
+      const images = await getDetailsFromFirebase("galleries");
       dispatch(setGalleryImages(images)); // Update with your actual slice
     };
 
     fetchImages();
   }, []);
 
+  console.log(galleryImages);
+
   return (
     <div className={`row`}>
       <div className={`col-lg-6`}>
-        <GalleryInput onChange={handleImageChange} /> 
+        <GalleryInput onChange={handleImageChange} />
         <button onClick={uploadImage} disabled={!selectedImage}>
           Upload Image
         </button>
@@ -69,12 +71,20 @@ const Gallery = () => {
         <div className={styles.admin_output_section}>
           {galleryImages.length > 0 ? (
             galleryImages.map((image) => (
-              <div key={image.id} className={styles.gallery_output_card}>
-                <img src={image.imageUrl} alt="Gallery Image" />
+              <div key={image.id} style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                border: "1px solid #ccc",
+                padding: 10,
+              }} className={styles.gallery_output_card}>
+                <img style={{
+                  width: 200,
+                }} src={image.image} alt="Gallery Image" />
                 {/* Add delete functionality if needed */}
                 <AdminDeleteButton
                   id={image.id}
-                  collection="gallery"
+                  collection="galleries"
                   dispatchFunction={deleteGalleryImage} // Update with your actual slice action
                 />
               </div>

@@ -24,5 +24,5 @@ export const gallerySlice = createSlice({
     }
 })
 
-export const { setGalleryImages,addGalleryImage,deleteGalleryImage } = gallerySlice.actions
+export const { setGalleryImages,addGalleryImage, deleteGalleryImage } = gallerySlice.actions
 export default gallerySlice.reducer
