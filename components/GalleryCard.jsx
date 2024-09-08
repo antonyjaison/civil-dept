@@ -5,7 +5,7 @@ function GalleryCard({ imageUrl, description }) {
   return (
     <div className={styles.card}>
       <img src={imageUrl} alt={description} className={styles.image} />
-      <p className={styles.description}>{description}</p>
+      {/* <p className={styles.description}>{description}</p> */}
     </div>
   );
 }
